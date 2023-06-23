@@ -62,6 +62,16 @@ We can verify, that the ASM script substitutions get applied by taking a quick l
 ![](../../static/img/asm.png)
 
 
+Lastly, because we used a variable in the ASM code (`$pubKeyHash`), we must set its value after each contract instantiation. We do this using the `replaceAsmVars` function:
+
+```ts
+// Set ASM var values.
+// Keep in mind, that these are NOT constructor parameters and must be set separately.
+p2pkhInstance.replaceAsmVars({
+    'P2PKH.unlock.pubKeyHash': toHex(myPublicKeyHash)
+})
+```
+
 :::note
 Please bear in mind that modifying the contract's script code may cause inconsistencies between the on-chain and local execution (methods TS code) behavior. Once you modify the Bitcoin script, it is your responsibility to keep the two versions functionally equivalent.
 :::
